@@ -1,0 +1,178 @@
+#H5X{
+        margin-bottom: 1rem;
+        font-family: Arial, Helvetica, sans-serif;
+        font-weight: lighter;
+        font-size: 18pt;
+        color: #4a8ac2;
+        margin-top: 0em;
+}
+
+/* Media Query de Impresion */
+@media print{
+    @page {
+        margin: 1cm;
+        size: a4;
+    }
+    /* Fuentes */
+    @font-face {
+        font-family: "LOGO2";
+        src: url("../fonts/FUTURE1.ttf") format("truetype");
+    }
+    @font-face {
+        font-family: "LOGO3";
+        src: url("../fonts/LOGO2.ttf") format("truetype");
+    }
+    
+    /* Globales */
+    ::before, ::after{
+        display: none;
+    }
+    body{
+        background: none;
+    }
+    header{
+        display: none;
+    }
+    thead{
+        background: #f0f0f0;
+        color: rgb(110, 110, 110);
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        font-weight: 200;
+        width: 80%;
+    }
+    tbody{
+        background:#ffffff;
+        color: rgb(68, 68, 68);
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        font-weight: 100;
+        font-size: 12pt;
+        width: 80%;
+    }
+    td{
+        border-top: solid 1px;
+        border-bottom: solid 1px;
+        border-color: #E7E7E7;
+        text-align: center;
+        margin-left: -1rem;
+        margin-right: -1rem;
+    }
+    tfoot{
+        background: #f0f0f0;
+        color: rgb(110, 110, 110);
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        font-weight: 200;
+        width: 80%;
+    }
+    label{
+        font-family: Arial, Helvetica, sans-serif;
+        font-weight: lighter;
+        font-size: 15pt;
+        color: rgb(133, 133, 133);
+    }
+    h5{
+        font-family: Arial, Helvetica, sans-serif;
+        font-weight: lighter;
+        font-size: 18pt;
+        color: #527ea5;
+        margin-top: 0.2em;
+    }
+    
+    /* Classes */
+    .col-lg-3{
+        position: relative;
+        width: 110%;
+        -ms-flex: 0 0 25%;
+        flex: 0 0 25%;
+        max-width: 25%;
+    }
+    .col-lg-4{
+        position: relative;
+        width: 100%;
+        -ms-flex: 0 0 33.333333%;
+        flex: 0 0 33.333333%;
+        max-width: 33.333333%;
+    }
+    .col-lg-6 {
+        position: relative;
+        width: 100%;
+        padding-right: 15px;
+        padding-left: 15px;
+        -ms-flex: 0 0 50%;
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+    .col-lg-12{
+        position: relative;
+        width: 80%;
+        padding-right: 15px;
+        padding-left: 15px;
+        -ms-flex: 0 0 90%;
+        flex: 0 0 90%;
+        max-width: 90%;
+    }
+    .row {
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        -ms-flex-direction: row !important;
+        flex-direction: row !important;
+    }
+    .justify-content-center {
+        -ms-flex-pack: center !important;
+        justify-content: center !important;
+    }
+    .sidebar, .opciones{
+        display: none;
+    }
+    .dataTables_scrollBody, .dataTables_scrollHead, .dataTables_scrollFoot{
+        width: 50%;
+    }
+    
+    /* ID's */
+    #LogoX_Impress {
+        font-family: LOGO2;
+        font-size: 80px;
+        text-align: center;
+        color: #12181d;
+        margin-top: 0.5em;
+        color: #0d6ec4;
+    }
+    #ContainerX{
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        -ms-flex-align: center;
+        align-items: center;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+    }
+    #th-row{
+        font-size: 15pt;
+        text-align: center;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+    }      
+    #hrx2{
+        margin-left: 3rem;
+        margin-right: 3rem;
+        background: rgb(110, 110, 110);
+        margin-top: -2rem;
+        margin-bottom: 2rem;
+    }
+    #hrx1{
+        margin-bottom: 1.5rem;
+    }
+    #H5X{
+        margin-bottom: 1rem;
+        font-family: Arial, Helvetica, sans-serif;
+        font-weight: lighter;
+        color: #4a8ac2;
+        margin-top: 0.2em;
+        font-size: 22pt;
+    }
+    #datatable_filter, #datatable_info, #datatable_length, #datatable_paginate, #printBut, #hrx{
+        display: none;
+    }    
+}

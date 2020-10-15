@@ -1,0 +1,19 @@
+#Fragmento para eliminar las extensiones .php
+#de los documentos del Servidor.
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /Cursalia
+RewriteRule ^index/.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /cursalia/index.php [L]
+</IfModule>
+
+#Configuraciones de Indices
+DirectoryIndex index.php
+Options -Indexes
+
+#Limite de subida de archivos al servidor
+php_value file_uploads On
+php_value upload_max_filesize 50M
+php_value post_max_size 50M
