@@ -4,17 +4,17 @@
      */
     session_start();
     if($_SESSION['active'] == true){
+        $UserNick1  = $_SESSION['User1'];
+        $FK_Usuario1 = $_SESSION['idUsuario1'];
         if(isset($_POST['Activity'])){
             require_once 'conexion.php';
             /**
              * Meta-Data del archivo correspondiente a subir...
              */
-            $Nombre_File_Enc = $_FILES['BFile1']['name'];
+            $Nombre_File_Enc = $FK_Usuario1."-".$UserNick1."-".$_FILES['BFile1']['name'];
             $Size_File1      = $_FILES['BFile1']['size'];
             $Type_File1      = $_FILES['BFile1']['type'];
             $Tmp_File1       = $_FILES['BFile1']['tmp_name'];
-            $FK_Usuario1     = mysqli_real_escape_string($conexion,$_SESSION['idUsuario1']);
-            $FK_Usuario1     = $_SESSION['idUsuario1'];
             $FK_DetalleAct1  = mysqli_real_escape_string($conexion, trim($_POST['Activity'])); 
             
             if($Size_File1 <= 5000000){
