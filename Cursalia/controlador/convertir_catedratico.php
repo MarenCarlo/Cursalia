@@ -11,7 +11,7 @@
             $resultado1 = mysqli_query($conexion, $Q_DataUser);
             $RowData1   = mysqli_fetch_row($resultado1);
 
-            if($RowData1['0'] != 1){
+            if($RowData1['12'] != 1){
                 $Q_UpdateState = "UPDATE 
                                         `usuarios`
                                     SET 
@@ -27,7 +27,7 @@
                 }
             } else {
                 mysqli_close($conexion);
-                header('Location: ../menu.php?alert_null_pointer=<p class="msg_error_permissions">No se pudo convertir en Catedratico al Usuario, por que este es el usuario Maestro... :(</p>');
+                header('Location: ../menu.php?alert_null_pointer=<p class="msg_error_permissions">No se pudo convertir en Catedratico al Usuario, por que este es el Jefe Maestro de Cursalia... :(</p>');
             }
         } else {
             mysqli_close($conexion);

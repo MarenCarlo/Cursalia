@@ -16,37 +16,42 @@
         $Rol1       = $_SESSION['Rol1'];
         $UserGrado1 = $_SESSION['Grado1'];
 
-        if($Rol1 == 3){
-            if(isset($_POST) && !empty($_POST)){
-                require_once "controlador/conexion.php";
-                $idCurso = mysqli_real_escape_string($conexion, $_POST['idCurso']);
-                $idAlumno = mysqli_real_escape_string($conexion, $_POST['idUsuarioProm']);
+        require_once "controlador/conexion.php";
+        $Q_State        = "SELECT (Estado_Plataforma) FROM configuraciones_varias;";
+        $Q_Send         = mysqli_query($conexion,$Q_State);           
+        $State_Platform = mysqli_fetch_array($Q_Send);
+        if($State_Platform['0'] == "Activo" || $Rol1 == 1){
+            if($Rol1 == 3){
+                if(isset($_POST) && !empty($_POST)){
+                    require_once "controlador/conexion.php";
+                    $idCurso = mysqli_real_escape_string($conexion, $_POST['idCurso']);
+                    $idAlumno = mysqli_real_escape_string($conexion, $_POST['idUsuarioProm']);
 
-                $SQL1 = 'SELECT
-                            cursos.idCurso,
-                            cursos.NombreCurso,
-                            usuarios.idUsuario,
-                            usuarios.FName_User,
-                            usuarios.LName_User,
-                            detalle_alumno.Codigo_Estudiantil,
-                            grados.Codigo_Grado,
-                            grados.NombreGrado,
-                            jornada.Jornada,
-                            cursos.FK_Catedratico
-                        FROM
-                            detalle_actividades
-                        INNER JOIN actividades ON detalle_actividades.FK_Actividad = actividades.idActividad
-                        INNER JOIN cursos ON actividades.FK_Curso = cursos.idCurso
-                        INNER JOIN usuarios ON detalle_actividades.FK_Usuario = usuarios.idUsuario
-                        INNER JOIN Detalle_alumno ON detalle_actividades.FK_DetalleAlumno = detalle_alumno.idDetalle_Alumno
-                        INNER JOIN grados ON actividades.FK_Grado = grados.idGrado
-                        INNER JOIN jornada ON grados.FK_Jornada = jornada.idJornada
-                        WHERE actividades.FK_Curso = ' . $idCurso . '
-                        AND usuarios.idUsuario = ' . $idAlumno;
-    
-                $resultado1 = mysqli_query($conexion, $SQL1);
-                $columna1 = mysqli_fetch_array($resultado1);     
-                if($columna1 >= 1){      
+                    $SQL1 = 'SELECT
+                                cursos.idCurso,
+                                cursos.NombreCurso,
+                                usuarios.idUsuario,
+                                usuarios.FName_User,
+                                usuarios.LName_User,
+                                detalle_alumno.Codigo_Estudiantil,
+                                grados.Codigo_Grado,
+                                grados.NombreGrado,
+                                jornada.Jornada,
+                                cursos.FK_Catedratico
+                            FROM
+                                detalle_actividades
+                            INNER JOIN actividades ON detalle_actividades.FK_Actividad = actividades.idActividad
+                            INNER JOIN cursos ON actividades.FK_Curso = cursos.idCurso
+                            INNER JOIN usuarios ON detalle_actividades.FK_Usuario = usuarios.idUsuario
+                            INNER JOIN Detalle_alumno ON detalle_actividades.FK_DetalleAlumno = detalle_alumno.idDetalle_Alumno
+                            INNER JOIN grados ON actividades.FK_Grado = grados.idGrado
+                            INNER JOIN jornada ON grados.FK_Jornada = jornada.idJornada
+                            WHERE actividades.FK_Curso = ' . $idCurso . '
+                            AND usuarios.idUsuario = ' . $idAlumno;
+        
+                    $resultado1 = mysqli_query($conexion, $SQL1);
+                    $columna1 = mysqli_fetch_array($resultado1);     
+                    if($columna1 >= 1){      
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -442,14 +447,18 @@
 </body>
 </html>
 <?php
+                    } else {
+                        header('location: menu.php?alert_null_pointer=<p class="msg_error_permissions">Aun no existen actividades a promediar en este curso... :(</p>');
+                    }
                 } else {
-                    header('location: menu.php?alert_null_pointer=<p class="msg_error_permissions">Aun no existen actividades a promediar en este curso... :(</p>');
+                    header('location: menu.php?alert_null_pointer=<p class="msg_error_permissions">Cursalia no recibio ningun identificador de entrega... :(</p>');
                 }
             } else {
-                header('location: menu.php?alert_null_pointer=<p class="msg_error_permissions">Cursalia no recibio ningun identificador de entrega... :(</p>');
+                header('location: menu.php?alert_permissions=<p class="msg_error_permissions">Usted no tiene permiso para ver este recurso.</p>');
             }
         } else {
-            header('location: menu.php?alert_permissions=<p class="msg_error_permissions">Usted no tiene permiso para ver este recurso.</p>');
+            mysqli_close($conexion);
+            header('location: controlador/cierre_sesion.php');
         }
     } else {
         header('location: ../index.php?alert_InSes=<p class="msg_error">Inicie Sesion para ver este recurso.</p>');

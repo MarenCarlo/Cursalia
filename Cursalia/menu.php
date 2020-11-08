@@ -18,6 +18,12 @@ if ($_SESSION['active'] == true) {
     $UserGender = $_SESSION['Genero'];
     $UserFecNac = $_SESSION['FechaNac'];
     $UserPhone  = $_SESSION['Telefono1'];
+
+    require_once "controlador/conexion.php";
+    $Q_State        = "SELECT (Estado_Plataforma) FROM configuraciones_varias;";
+    $Q_Send         = mysqli_query($conexion,$Q_State);           
+    $State_Platform = mysqli_fetch_array($Q_Send);
+    if($State_Platform['0'] == "Activo" || $UserRol1 == 1){
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -77,6 +83,10 @@ if ($_SESSION['active'] == true) {
 </body>
 </html>
 <?php
+    } else {
+        mysqli_close($conexion);
+        header('location: controlador/cierre_sesion.php');
+    }
 } else {
     header('location: ../index.php?alert_InSes=<p class="msg_error">Inicie Sesion para ver este recurso.</p>');
 }
