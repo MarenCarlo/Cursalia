@@ -15,7 +15,13 @@
         $UserEmail1 = $_SESSION['Email1'];
         $Rol1       = $_SESSION['Rol1'];
         $UserGrado1 = $_SESSION['Grado1'];
-        if($Rol1 == 1){
+
+        require_once "controlador/conexion.php";
+        $Q_State        = "SELECT (Estado_Plataforma) FROM configuraciones_varias;";
+        $Q_Send         = mysqli_query($conexion,$Q_State);           
+        $State_Platform = mysqli_fetch_array($Q_Send);
+        if($State_Platform['0'] == "Activo" || $Rol1 == 1){
+            if($Rol1 == 1){
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -46,8 +52,12 @@
 </body>
 </html>
 <?php
+            } else {
+                header('location: menu.php?alert_permissions=<p class="msg_error_permissions">Usted no tiene permiso para ver este recurso.</p>');
+            }
         } else {
-            header('location: menu.php?alert_permissions=<p class="msg_error_permissions">Usted no tiene permiso para ver este recurso.</p>');
+            mysqli_close($conexion);
+            header('location: controlador/cierre_sesion.php');
         }
     } else {
         header('location: ../index.php?alert_InSes=<p class="msg_error">Inicie Sesion para ver este recurso.</p>');

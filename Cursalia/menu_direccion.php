@@ -8,11 +8,16 @@
         para no estarlos llamando en cada documento
         incluido en el cual se utilizara.
     */
-    $User1 = $_SESSION['User1'];
-    $Rol1 = $_SESSION['Rol1'];
-
     if($_SESSION['active'] == true){
-        if($Rol1 == 1){
+        $User1 = $_SESSION['User1'];
+        $Rol1  = $_SESSION['Rol1'];
+        $Key   = $_SESSION['Master'];
+        require_once "controlador/conexion.php";
+        $Q_State        = "SELECT (Estado_Plataforma) FROM configuraciones_varias;";
+        $Q_Send         = mysqli_query($conexion,$Q_State);           
+        $State_Platform = mysqli_fetch_array($Q_Send);
+        if($State_Platform['0'] == "Activo" || $Rol1 == 1){
+            if($Rol1 == 1){
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -38,12 +43,30 @@
                 ?>
             </div>
         </section>
+        <?php
+            if($State_Platform['0'] == "Activo"){
+        ?>
+        <script type="text/javascript" src="../js/admin_confs1.js"></script>
+        <?php
+            }
+        ?> 
+        <?php
+            if($State_Platform['0'] == "Mantenimiento"){
+        ?>
+        <script type="text/javascript" src="../js/admin_confs2.js"></script>
+        <?php
+            }
+        ?> 
         <script type="text/javascript" src="../js/sidebar.js"></script>        
     </body>
 </html>
 <?php
-        }else{
-            header('location: menu.php?alert_permissions=<p class="msg_error_permissions">Usted no tiene permiso para ver este recurso.</p>');
+            }else{
+                header('location: menu.php?alert_permissions=<p class="msg_error_permissions">Usted no tiene permiso para ver este recurso.</p>');
+            }
+        } else {
+            mysqli_close($conexion);
+            header('location: controlador/cierre_sesion.php');
         }
     }else{
         header('location: ../index.php?alert_InSes=<p class="msg_error">Inicie Sesion para ver este recurso.</p>');

@@ -54,7 +54,6 @@
 <br>
 <div class="row" style="margin-top: -4rem;">    
     <div class="col-lg-12">
-        <br>
         <div id="cards_usuario" class="card">
             <div class="card-body text--center">
                 <h5 class="card-title">
@@ -77,6 +76,91 @@
     <br>
 </div>
 <br>
+<?php
+if($Key == 1){
+?>
+<div class="row" style="margin-top: -4rem;">    
+    <div class="col-lg-12">
+        <div id="cards_usuario" class="card">
+            <div class="card-body text--center">
+                <h5 class="card-title">
+                <svg class="icons-direccion" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="gray" width="32px" height="32px">
+                    <path d="M22.7 19l-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.4 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4z"/>
+                </svg>
+                    Panel de Configuracion.
+                </h5>
+                <p class="card-text">
+                    En este menu dispones del control de todas las configuraciones del sistema que Cursalia te provee.<br>
+                </p>
+                <form action="controlador/configuration.php" method="POST">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-2" title="Con estas opciones seleccionas si quieres que la plataforma este Activada o en Mantenimiento, esta segunda opcion es ideal para realizar cambios del sistema en Cursalia o bien al momento de realizar cambios de Ciclo o Año...">
+                            <svg class="icons-direccion-conf" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="gray" width="48px" height="48px"><path d="M4.5 11h-2V9H1v6h1.5v-2.5h2V15H6V9H4.5v2zm2.5-.5h1.5V15H10v-4.5h1.5V9H7v1.5zm5.5 0H14V15h1.5v-4.5H17V9h-4.5v1.5zm9-1.5H18v6h1.5v-2h2c.8 0 1.5-.7 1.5-1.5v-1c0-.8-.7-1.5-1.5-1.5zm0 2.5h-2v-1h2v1z"/></svg>
+                            <br>
+                            <?php
+                                if($State_Platform['0'] == "Activo"){
+                            ?>
+                            <div style="text-align:left; margin-left: 10%; position: sticky;">
+                                <div class="custom-control custom-radio custom-control-inline" style="margin-top: 4px;">
+                                    <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input" value="0" checked>
+                                    <label class="custom-control-label" for="customRadioInline2">Activo</label>
+                                </div>
+                                <br>
+                                <div class="custom-control custom-radio custom-control-inline" style="margin-bottom: 4px;">
+                                    <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input" value="1">
+                                    <label class="custom-control-label" for="customRadioInline1">Mantenimiento</label>
+                                </div>
+                            </div>
+                            
+                            <?php
+                                }
+                                if($State_Platform['0'] == "Mantenimiento"){
+                            ?>
+                            <div style="text-align:left; margin-left: 10%; position: sticky;">
+                                <div class="custom-control custom-radio custom-control-inline" style="margin-top: 4px;">
+                                    <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input" value="0">
+                                    <label class="custom-control-label" for="customRadioInline2">Activo</label>
+                                </div>
+                                <br>
+                                <div class="custom-control custom-radio custom-control-inline" style="margin-bottom: 4px;">
+                                    <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input" value="1" checked>
+                                    <label class="custom-control-label" for="customRadioInline1">Mantenimiento</label>
+                                </div>
+                            </div>
+                            <?php
+                                }
+                            ?>
+                            <p id="label2">Estado<br>Plataforma</p>
+                        </div>
+                        <div class="col-lg-2">
+                            <svg class="icons-direccion-conf" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="gray" width="48px" height="48px"><path d="M4.5 11h-2V9H1v6h1.5v-2.5h2V15H6V9H4.5v2zm2.5-.5h1.5V15H10v-4.5h1.5V9H7v1.5zm5.5 0H14V15h1.5v-4.5H17V9h-4.5v1.5zm9-1.5H18v6h1.5v-2h2c.8 0 1.5-.7 1.5-1.5v-1c0-.8-.7-1.5-1.5-1.5zm0 2.5h-2v-1h2v1z"/></svg>
+                            <br>
+                            <label id="label2">Estado<br>de la<br>Plataforma</label>
+                        </div>
+                        <div class="col-lg-2">
+                            <svg class="icons-direccion-conf" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="gray" width="48px" height="48px"><path d="M4.5 11h-2V9H1v6h1.5v-2.5h2V15H6V9H4.5v2zm2.5-.5h1.5V15H10v-4.5h1.5V9H7v1.5zm5.5 0H14V15h1.5v-4.5H17V9h-4.5v1.5zm9-1.5H18v6h1.5v-2h2c.8 0 1.5-.7 1.5-1.5v-1c0-.8-.7-1.5-1.5-1.5zm0 2.5h-2v-1h2v1z"/></svg>
+                            <br>
+                            <label id="label2">Estado<br>de la<br>Plataforma</label>
+                        </div>
+                        <div class="col-lg-2">
+                            <svg class="icons-direccion-conf" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="gray" width="48px" height="48px"><path d="M4.5 11h-2V9H1v6h1.5v-2.5h2V15H6V9H4.5v2zm2.5-.5h1.5V15H10v-4.5h1.5V9H7v1.5zm5.5 0H14V15h1.5v-4.5H17V9h-4.5v1.5zm9-1.5H18v6h1.5v-2h2c.8 0 1.5-.7 1.5-1.5v-1c0-.8-.7-1.5-1.5-1.5zm0 2.5h-2v-1h2v1z"/></svg>
+                            <br>
+                            <label id="label2">Estado<br>de la<br>Plataforma</label>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <input type="submit" id="Admin_Submit" class="btn btn-info purple-gradient col-lg-6" value="Actualizar" disabled>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <br>
+</div>
+<br>
+<?php
+}
+?>
 <!--
 <div class="row" style="margin-top: -20px;">
     <div class="col-lg-6">

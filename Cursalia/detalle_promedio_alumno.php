@@ -15,49 +15,55 @@ if($_SESSION['active'] == true){
     $UserLName1 = $_SESSION['LName1'];
     $GradoUser1 = $_SESSION['Grado1'];
     $Rol1       = $_SESSION['Rol1'];
-    
-    if(isset($_POST['idCurso']) && isset($_POST['codeAlumno']) && !empty($_POST)){
-            require_once 'controlador/conexion.php';
-            $idCurso = mysqli_real_escape_string($conexion, $_POST['idCurso']);
-            $cAlumno = mysqli_real_escape_string($conexion, $_POST['codeAlumno']);
-            
-            $Q_Detail = 'SELECT
-                            detalle_alumno.idDetalle_Alumno,
-                            detalle_alumno.Codigo_Estudiantil,
-                            usuarios.idUsuario,
-                            usuarios.User,
-                            usuarios.FName_User,
-                            usuarios.LName_User,
-                            grados.idGrado,
-                            grados.Codigo_Grado,
-                            grados.NombreGrado,
-                            secciones.NombreSeccion,
-                            jornada.Jornada,
-                            nivel_estudiantil.idNivelEstudiantil,
-                            nivel_estudiantil.Nivel_Estudiantil
-                        FROM
-                            detalle_alumno
-                        INNER JOIN usuarios ON detalle_alumno.FK_Usuario = usuarios.idUsuario
-                        INNER JOIN grados ON detalle_alumno.FK_Grado = grados.idGrado
-                        INNER JOIN nivel_estudiantil ON detalle_alumno.FK_Nivel_Estudiantil = nivel_estudiantil.idNivelEstudiantil
-                        INNER JOIN jornada ON grados.FK_Jornada = jornada.idJornada
-                        INNER JOIN secciones ON grados.FK_Seccion = secciones.idSeccion
-                        WHERE
-                            detalle_alumno.Codigo_Estudiantil = "'.$cAlumno.'";';
-            $Res_Detail = mysqli_query($conexion, $Q_Detail);
-            $Row_Detail = mysqli_fetch_row($Res_Detail);  
-            if($Row_Detail >= 1){      
-                $Q_Curso      = 'SELECT  
-                                    cursos.NombreCurso,
-                                    usuarios.FName_User,
-                                    usuarios.LName_User
-                                FROM 
-                                    cursos
-                                INNER JOIN usuarios ON cursos.FK_Catedratico = usuarios.idUsuario
-                                WHERE
-                                    cursos.idCurso = '. $idCurso .';';
-                $Curse_Detail = mysqli_query($conexion, $Q_Curso);
-                $Curso_Detail = mysqli_fetch_row($Curse_Detail);  
+
+    require_once "controlador/conexion.php";
+    $Q_State        = "SELECT (Estado_Plataforma) FROM configuraciones_varias;";
+    $Q_Send         = mysqli_query($conexion,$Q_State);           
+    $State_Platform = mysqli_fetch_array($Q_Send);
+    if($State_Platform['0'] == "Activo" || $Rol1 == 1){
+
+        if(isset($_POST['idCurso']) && isset($_POST['codeAlumno']) && !empty($_POST)){
+                require_once 'controlador/conexion.php';
+                $idCurso = mysqli_real_escape_string($conexion, $_POST['idCurso']);
+                $cAlumno = mysqli_real_escape_string($conexion, $_POST['codeAlumno']);
+                
+                $Q_Detail = 'SELECT
+                                detalle_alumno.idDetalle_Alumno,
+                                detalle_alumno.Codigo_Estudiantil,
+                                usuarios.idUsuario,
+                                usuarios.User,
+                                usuarios.FName_User,
+                                usuarios.LName_User,
+                                grados.idGrado,
+                                grados.Codigo_Grado,
+                                grados.NombreGrado,
+                                secciones.NombreSeccion,
+                                jornada.Jornada,
+                                nivel_estudiantil.idNivelEstudiantil,
+                                nivel_estudiantil.Nivel_Estudiantil
+                            FROM
+                                detalle_alumno
+                            INNER JOIN usuarios ON detalle_alumno.FK_Usuario = usuarios.idUsuario
+                            INNER JOIN grados ON detalle_alumno.FK_Grado = grados.idGrado
+                            INNER JOIN nivel_estudiantil ON detalle_alumno.FK_Nivel_Estudiantil = nivel_estudiantil.idNivelEstudiantil
+                            INNER JOIN jornada ON grados.FK_Jornada = jornada.idJornada
+                            INNER JOIN secciones ON grados.FK_Seccion = secciones.idSeccion
+                            WHERE
+                                detalle_alumno.Codigo_Estudiantil = "'.$cAlumno.'";';
+                $Res_Detail = mysqli_query($conexion, $Q_Detail);
+                $Row_Detail = mysqli_fetch_row($Res_Detail);  
+                if($Row_Detail >= 1){      
+                    $Q_Curso      = 'SELECT  
+                                        cursos.NombreCurso,
+                                        usuarios.FName_User,
+                                        usuarios.LName_User
+                                    FROM 
+                                        cursos
+                                    INNER JOIN usuarios ON cursos.FK_Catedratico = usuarios.idUsuario
+                                    WHERE
+                                        cursos.idCurso = '. $idCurso .';';
+                    $Curse_Detail = mysqli_query($conexion, $Q_Curso);
+                    $Curso_Detail = mysqli_fetch_row($Curse_Detail);  
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -532,11 +538,15 @@ if($_SESSION['active'] == true){
     </body>
 </html>
 <?php
+            } else {
+                header('location: menu.php?alert_null_pointer=<p class="msg_error_permissions">Aun no existen actividades a promediar en este curso... :(</p>');
+            }
         } else {
-            header('location: menu.php?alert_null_pointer=<p class="msg_error_permissions">Aun no existen actividades a promediar en este curso... :(</p>');
+            header('location: menu.php?alert_null_pointer=<p class="msg_error_permissions">Cursalia no recibio ningun identificador de Alumno... :(</p>');
         }
     } else {
-        header('location: menu.php?alert_null_pointer=<p class="msg_error_permissions">Cursalia no recibio ningun identificador de Alumno... :(</p>');
+        mysqli_close($conexion);
+        header('location: controlador/cierre_sesion.php');
     }
 } else {
     header('location: ../index.php?alert_InSes=<p class="msg_error">Inicie Sesion para ver este recurso.</p>');

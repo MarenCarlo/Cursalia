@@ -189,7 +189,7 @@
                                     
                             ?>
                                 <td id="th-row" class="opciones">
-                                    <form target="_blank" action="../Cursalia/detalle_promedio_uninited.php" method="POST">
+                                    <form action="../Cursalia/detalle_promedio_uninited.php" method="POST">
                                         <input type="text" value="<?php echo $Row_Detail['1']; ?>" name="codeAlumno" hidden>
                                         <button class="Promedio" value="<?php echo $rowAlu1['0']; ?>" name="idCurso" type="submit" style="color: #157EFB; background: none; border: none;">
                                             Mas Detalles

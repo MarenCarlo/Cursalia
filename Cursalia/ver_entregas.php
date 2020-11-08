@@ -16,29 +16,32 @@
         $Rol1       = $_SESSION['Rol1'];
         $UserGrado1 = $_SESSION['Grado1'];
 
-        if($Rol1 == 1 || $Rol1 == 2){
-            if(isset($_POST) && !empty($_POST)){
-                include 'controlador/conexion.php';
-                $idActividad = mysqli_real_escape_string($conexion, $_POST['entregas']);
-                
-                $SQL    = 'SELECT 
-                                actividades.idActividad,
-                                actividades.NombreActividad,
-                                actividades.DescripcionActividad,
-                                actividades.Fecha_Entrega,
-                                detalle_actividades.idDetalleActividad,
-                                detalle_actividades.Estado_Entrega,
-                                detalle_actividades.Estado_Calificacion,
-                                detalle_actividades.Calificacion
-                            FROM 
-                                detalle_actividades
-                            INNER JOIN actividades ON detalle_actividades.FK_Actividad = actividades.idActividad
-                            WHERE 
-                                idActividad = '.$idActividad;
-                $resultado = mysqli_query($conexion, $SQL);
-                $columna1  = mysqli_fetch_row($resultado);
-
-                
+        require_once "controlador/conexion.php";
+        $Q_State        = "SELECT (Estado_Plataforma) FROM configuraciones_varias;";
+        $Q_Send         = mysqli_query($conexion,$Q_State);           
+        $State_Platform = mysqli_fetch_array($Q_Send);
+        if($State_Platform['0'] == "Activo" || $Rol1 == 1){
+            if($Rol1 == 1 || $Rol1 == 2){
+                if(isset($_POST) && !empty($_POST)){
+                    include 'controlador/conexion.php';
+                    $idActividad = mysqli_real_escape_string($conexion, $_POST['entregas']);
+                    
+                    $SQL    = 'SELECT 
+                                    actividades.idActividad,
+                                    actividades.NombreActividad,
+                                    actividades.DescripcionActividad,
+                                    actividades.Fecha_Entrega,
+                                    detalle_actividades.idDetalleActividad,
+                                    detalle_actividades.Estado_Entrega,
+                                    detalle_actividades.Estado_Calificacion,
+                                    detalle_actividades.Calificacion
+                                FROM 
+                                    detalle_actividades
+                                INNER JOIN actividades ON detalle_actividades.FK_Actividad = actividades.idActividad
+                                WHERE 
+                                    idActividad = '.$idActividad;
+                    $resultado = mysqli_query($conexion, $SQL);
+                    $columna1  = mysqli_fetch_row($resultado);                    
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -295,11 +298,15 @@
 </body>
 </html>
 <?php
+                } else {
+                    header('location: menu.php?alert_null_pointer=<p class="msg_error_permissions">Cursalia no recibio ningun identificador de entrega... :(</p>');
+                }
             } else {
-                header('location: menu.php?alert_null_pointer=<p class="msg_error_permissions">Cursalia no recibio ningun identificador de entrega... :(</p>');
+                header('location: menu.php?alert_permissions=<p class="msg_error_permissions">Usted no tiene permiso para ver este recurso.</p>');
             }
         } else {
-            header('location: menu.php?alert_permissions=<p class="msg_error_permissions">Usted no tiene permiso para ver este recurso.</p>');
+            mysqli_close($conexion);
+            header('location: controlador/cierre_sesion.php');
         }
     } else {
         header('location: ../index.php?alert_InSes=<p class="msg_error">Inicie Sesion para ver este recurso.</p>');

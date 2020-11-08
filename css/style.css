@@ -132,6 +132,13 @@ nav {
   margin-top: 0.3rem;
   font-size: 10pt;
 }
+#label2 {
+  margin-top: -10%;
+  color: #3c5469;
+  margin-top: 0.3rem;
+  font-size: 10pt;
+  text-decoration: none;
+}
 
 /*Cards Menu Direccion*/
 #cards_menu_direccion {
@@ -163,6 +170,23 @@ nav {
 #cards_usuario:hover {
   box-shadow: 15px 20px 50px #12181d;
   transition: 0.5s;
+}
+#list_item{
+  background:#B814BC;
+  color: #ffffff;
+  cursor: pointer;
+  padding-top: 1%; 
+  padding-bottom: 0%;
+  transition: all 0.5s;
+}
+#list_item label svg{
+  position: sticky;
+  cursor: pointer;
+}
+#list_item:hover{
+  background: #3D93D7;
+  transition: all 1s;
+  cursor: pointer;
 }
 
 /*card informacion Curso*/
@@ -299,6 +323,7 @@ nav {
   margin-bottom: -4%;
 }
 
+
 /*Color de fuentes con Gradiente linear*/
 .curso-cards {
   background: -webkit-linear-gradient(
@@ -355,6 +380,10 @@ nav {
 }
 .icons-direccion{
   margin-top: -4px;
+}
+.icons-direccion-conf{
+  margin-top: -3px;
+  margin-bottom: -0.5rem;
 }
 /* Clases-SideBar */
 #SectionIzq {
