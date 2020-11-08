@@ -4,12 +4,14 @@
      */
     session_start();
     if($_SESSION['active'] == true){
+        $UserNick1  = $_SESSION['User1'];
+        $FK_Usuario1 = $_SESSION['idUsuario1'];
         if(isset($_POST['ContentCurs'])){
             require_once 'conexion.php';
             /**
              * Meta-Data del archivo correspondiente a subir...
              */
-            $Nombre_File_Enc = $_FILES['ContentFile']['name'];
+            $Nombre_File_Enc = $FK_Usuario1."-".$UserNick1."-".$_FILES['ContentFile']['name'];
             $Size_File1      = $_FILES['ContentFile']['size'];
             $Type_File1      = $_FILES['ContentFile']['type'];
             $Tmp_File1       = $_FILES['ContentFile']['tmp_name'];
