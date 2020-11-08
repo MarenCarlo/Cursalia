@@ -50,7 +50,7 @@
                     <select name="ActTipoCal1" id="select__form" class="form__input" class="form-control" required>
                         <option value="<?php echo $ActivRow['9']; ?>"> (selected) <?php echo $ActivRow['10']; ?> - <?php echo $ActivRow['11']; ?>%</option>
                         <?php
-                            $sqlX2 = 'SELECT DISTINCT * FROM Tipo_Calificacion WHERE FK_Usuario = '.$UserId1.' AND idTipoCalificacion NOT LIKE '.$ActivRow['9'].';';
+                            $sqlX2 = 'SELECT DISTINCT * FROM Tipo_Calificacion WHERE idTipoCalificacion NOT LIKE '.$ActivRow['9'].';';
                             $query1 = mysqli_query($conexion,$sqlX2); 
 
                             while ($columna = mysqli_fetch_array($query1)){
